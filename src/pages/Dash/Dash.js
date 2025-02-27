@@ -1,7 +1,7 @@
 function Dash(){
     return(
         <div>
-            <h1>Seja bem vindo!!</h1>
+            <h1>Sejam bem vindos!!</h1>
         </div>
     )
 }
