@@ -1,7 +1,9 @@
+import styles from './Dash.module.css'
+
 function Dash(){
     return(
-        <div>
-            <h1>Sejam bem vindos!!</h1>
+        <div className={styles.container}>
+            <h1>Gerenciador de casamentos</h1>
         </div>
     )
 }
