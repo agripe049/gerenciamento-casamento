@@ -8,7 +8,7 @@ function Login(){
 
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const navigate = useNavigate
+    const navigate = useNavigate();
     
     const [
         signInWithEmailAndPassword,
