@@ -1,4 +1,21 @@
 .container {
+    max-width: 600px;
+    margin: 0 auto;
+    height: 750px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #c99351;
+    border-radius: 5px;
+}
+
+h3 {
+    margin: 10px 0;
+}
+
+input {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
 }
