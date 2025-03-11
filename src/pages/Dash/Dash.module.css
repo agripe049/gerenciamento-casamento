@@ -1,11 +1,11 @@
 .container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
     height: 750px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    background-color: #c99351;
+    background-color: #ffffff;
     border-radius: 5px;
 }
 
