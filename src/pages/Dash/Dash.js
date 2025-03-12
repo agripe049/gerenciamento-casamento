@@ -1,7 +1,7 @@
 import styles from './Dash.module.css'
 import { useEffect, useState } from 'react';
 
-function Dash() {
+function Dash({id, handleRemove}) {
 
     const [orcamentoTotal, setOrcamentoTotal] = useState(0);
     const [totalGasto, setTotalGasto] = useState(0);
@@ -64,6 +64,28 @@ function Dash() {
         }
     };
 
+    const remove = (index) => {
+        setItens(prevItens => prevItens.filter((_, i) => i !== index));
+    }
+
+    fetch(`http://localhost:5000/itens/${id}`, {
+        method: "DELETE",
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Item removido com sucesso:', data);
+    })
+    .catch(error => {
+        console.error('Erro ao remover item:', error);
+    });
+
+    
+
 
     const saldoRestante = orcamentoTotal - totalGasto;
 
@@ -74,6 +96,7 @@ function Dash() {
             currency: 'BRL',
         }).format(value);
     };
+
 
     return (
         <div className={styles.container}>
@@ -118,6 +141,7 @@ function Dash() {
                     {itens.map((item, index) => (
                         <li key={index}>
                             {item.nome}: {formatCurrency(item.gasto)}
+                            <button onClick={() => remove(index)}>Remover</button>
                         </li>
                     ))}
                 </ul>
