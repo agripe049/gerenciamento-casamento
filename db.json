@@ -1,5 +1,17 @@
 {
-    "orcamentoTotal": [],
-    "item": [],
-    "gasto": []
+  "orcamentoTotal": {
+    "valor": 0
+  },
+  "itens": [
+    {
+      "id": "59c3",
+      "nome": "Buffet",
+      "gasto": 3000
+    },
+    {
+      "id": "9a7c",
+      "nome": "Buffet",
+      "gasto": 4500
+    }
+  ]
 }
