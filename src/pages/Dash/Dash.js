@@ -1,7 +1,7 @@
 import styles from './Dash.module.css'
 import { useEffect, useState } from 'react';
 
-function Dash({id, handleRemove}) {
+function Dash() {
 
     const [orcamentoTotal, setOrcamentoTotal] = useState(0);
     const [totalGasto, setTotalGasto] = useState(0);
@@ -26,27 +26,25 @@ function Dash({id, handleRemove}) {
 
     const handleAddItem = () => {
         if (item && gasto) {
-            const novoGasto = parseFloat(gasto)
+            const novoGasto = parseFloat(gasto);
+            
+            // Verifica se o item já existe
+            const itemExists = itens.some(existingItem => existingItem.nome === item);
+            
+            if (itemExists) {
+                alert("Este item já foi adicionado.");
+                return; // Não adiciona o item se já existir
+            }
+    
             setTotalGasto(prevTotal => prevTotal + novoGasto);
             setItem("");
             setGasto(0);
-
-            {/*Criar um novo item*/}
-            const novoItem = {
-                nome: item,
-                gasto: novoGasto
-            };
-
-            {/*Atualiza a lista de itens*/}
-            setItens(prevItens => [...prevItens, novoItem]);
-
-            {/*Enviar dados para o JSON db.json*/ }
+    
             const itemData = {
                 nome: item,
                 gasto: novoGasto
             };
-
-
+    
             fetch(`http://localhost:5000/itens`, {
                 method: "POST",
                 headers: {
@@ -54,35 +52,44 @@ function Dash({id, handleRemove}) {
                 },
                 body: JSON.stringify(itemData),
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Item adicionado com sucesso:', data);
-                })
-                .catch(error => {
-                    console.error('Erro ao adicionar item:', error)
-                });
+            .then(response => response.json())
+            .then(data => {
+                console.log('Item adicionado com sucesso:', data);
+                // Adicione o novo item à lista de itens com o ID retornado
+                setItens(prevItens => [...prevItens, { ...itemData, id: data.id }]); // Supondo que o servidor retorne o ID
+            })
+            .catch(error => {
+                console.error('Erro ao adicionar item:', error);
+            });
         }
     };
 
     const remove = (index) => {
-        setItens(prevItens => prevItens.filter((_, i) => i !== index));
-    }
+        const itemToRemove = itens[index]
 
-    fetch(`http://localhost:5000/itens/${id}`, {
-        method: "DELETE",
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Item removido com sucesso:', data);
-    })
-    .catch(error => {
-        console.error('Erro ao remover item:', error);
-    });
+        {/*Remover o item do estado local*/}
+        setItens(prevItens => prevItens.filter((_, i) => i !== index));
+
+        {/*Subtrair o valor do item removido do totalGasto*/}
+        setTotalGasto(prevTotal => prevTotal - itemToRemove.gasto);
+
+        fetch(`http://localhost:5000/itens/${itemToRemove.id}`, {
+            method: "DELETE",
+        })
+        .then(response => {
+            console.log('Resposta do servidor:', response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Item removido com sucesso:', data);
+        })
+        .catch(error => {
+            console.error('Erro ao remover item:', error);
+        });
+    }
 
     
 
