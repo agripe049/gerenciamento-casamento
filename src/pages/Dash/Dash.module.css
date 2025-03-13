@@ -9,8 +9,15 @@
     border-radius: 5px;
 }
 
+
+
 h3 {
     margin: 10px 0;
+    color: rgb(32, 34, 34);
+}
+
+h1 {
+    color: #de6f46;
 }
 
 input {

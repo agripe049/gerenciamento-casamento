@@ -107,7 +107,8 @@ function Dash() {
 
     return (
         <div className={styles.container}>
-            <h1>Gerenciador de casamentos</h1>
+            <div className={styles.form}>
+            <h1>Gerenciador de Orçamento para Casamentos</h1>
             {/*Entrada do orçamento Total*/}
             <div>
                 <h3>Orçamento Total (R$):</h3>
@@ -139,8 +140,8 @@ function Dash() {
                     value={gasto}
                     onChange={(e) => setGasto(e.target.value)}
                 />
-                <button onClick={handleAddItem}>Adicionar Item</button>
             </div>
+            <button onClick={handleAddItem}>Adicionar Item</button>
             {/*Termômetro visual*/}
             <div>
                 <h2>Itens Adicionados</h2>
@@ -155,6 +156,7 @@ function Dash() {
                 <p>Total Gasto: {formatCurrency(totalGasto)}</p>
                 <p>Saldo Restante: {formatCurrency(saldoRestante)}</p>
             </div>
+        </div>
 
         </div>
     )
