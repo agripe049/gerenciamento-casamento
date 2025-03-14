@@ -3,11 +3,13 @@ import styles from './Login.module.css';
 import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../routes/contexts/AuthContext';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth();
     
     const [
         signInWithEmailAndPassword,
@@ -21,6 +23,7 @@ function Login() {
     }
 
     if (user) {
+        login(); // Chame a função de login do contexto
         navigate('/dash');
         return null;
     }
@@ -63,6 +66,7 @@ function Login() {
                         Entrar
                     </button>
                 </form>
+                {error && <p>{error.message}</p>} {/* Exibe mensagem de erro, se houver */}
             </div>
         </div>
     );
