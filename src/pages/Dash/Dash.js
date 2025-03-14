@@ -7,7 +7,7 @@ function Dash() {
     const [totalGasto, setTotalGasto] = useState(0);
     const [item, setItem] = useState("");
     const [gasto, setGasto] = useState("");
-    const [itens, setItens] = useState([])
+    const [itens, setItens] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:5000/orcamentoTotal`, {
@@ -166,3 +166,5 @@ function Dash() {
 }
 
 export default Dash;
+
+  {/* Projeto pronto */}
