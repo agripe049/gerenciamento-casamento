@@ -1,17 +1,15 @@
 .container {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 20px auto;
     height: 750px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     background-color: #ffffff;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 
-.form{
-    padding: 45px;
-}
+
 
 h3 {
     margin: 10px 0;
@@ -23,74 +21,8 @@ h1 {
 }
 
 input {
-    padding: 10px;
+    padding: 8px;
     width: 100%;
-    max-width: 500px;
+    max-width: 300px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
 }
-
-button{
-    background-color: #de6f46;
-    color: #ffffff;
-    padding: 6px;
-    font-size: 15px;
-    border-radius: 6px;
-    border: none;
-    margin-top: 12px;
-    margin-bottom: 10px;
-    cursor: pointer;
-}
-
-.removeButton{
-    margin-left: 300px; 
-}
-
-.itemList ul {
-    list-style-type: none; /* Remove os marcadores da lista */
-    padding: 0; /* Remove o preenchimento padrão */
-}
-
-.itemList li {
-    display: flex; /* Define o li como um contêiner flexível */
-    justify-content: space-between; /* Espaça os itens */
-    align-items: center; /* Alinha verticalmente os itens */
-    font-size: 18px; /* Aumenta o tamanho da fonte dos itens */
-    margin-bottom: 10px; /* Adiciona um espaço entre os itens */
-}
-
-.itemList li span {
-    flex: 1; /* Permite que o texto do item ocupe o espaço restante */
-    min-width: 0; /* Permite que o texto quebre corretamente */
-    margin-right: 10px; /* Espaço entre o texto e o botão */
-    white-space: nowrap; /* Impede que o texto quebre para a linha de baixo */
-    overflow: hidden; /* Oculta o texto que não cabe */
-    text-overflow: ellipsis; /* Adiciona "..." ao final do texto que não cabe */
-}
-
-.itemList li .price {
-    min-width: 80px; /* Ajuste conforme necessário para o espaço do preço */
-    white-space: nowrap; /* Impede que o preço quebre para a linha de baixo */
-}
-
-.itemList button {
-    min-width: 100px; /* Ajuste conforme necessário */
-}
-
-.itemList {
-    flex-grow: 1; /* Permite que a lista de itens ocupe o espaço restante */
-    max-height: 220px; /* Defina a altura máxima que você deseja */
-    overflow-y: auto; /* Adiciona uma barra de rolagem vertical quando necessário */
-    border: 1px solid #ccc; /* Opcional: borda para a lista */
-    padding: 10px; /* Opcional: espaçamento interno */
-    margin-top: 10px; /* Espaço acima da lista */
-    border-radius: 4px; /* Bordas arredondadas (opcional) */
-}
-
-.footer {
-    margin-top: 10px; /* Ajuste o espaço acima do rodapé */
-    padding: 10px; /* Espaçamento interno */
-    border-top: 1px solid #ccc; /* Linha acima do rodapé */
-}
-
