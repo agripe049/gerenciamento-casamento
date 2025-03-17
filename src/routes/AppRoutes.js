@@ -6,7 +6,7 @@ function AppRoutes(){
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Dash />} />
+                    <Route path="/dash" element={<Dash />} />
                 </Routes>
             </BrowserRouter>
         </div>
