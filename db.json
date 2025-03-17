@@ -3,6 +3,15 @@
     "valor": 0
   },
   "itens": [
-    
+    {
+      "id": "cc20",
+      "nome": "ww",
+      "gasto": 78
+    },
+    {
+      "id": "07fb",
+      "nome": "Buffet",
+      "gasto": 12
+    }
   ]
 }
