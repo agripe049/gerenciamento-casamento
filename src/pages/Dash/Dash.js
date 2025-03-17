@@ -7,7 +7,7 @@ function Dash() {
     const [totalGasto, setTotalGasto] = useState(0);
     const [item, setItem] = useState("");
     const [gasto, setGasto] = useState("");
-    const [itens, setItens] = useState([])
+    const [itens, setItens] = useState([]);
 
     useEffect(() => {
         fetch(`http://localhost:5000/orcamentoTotal`, {
@@ -91,6 +91,9 @@ function Dash() {
             });
     }
 
+
+
+
     const saldoRestante = orcamentoTotal - totalGasto;
 
     // Função para formatar números como moeda
@@ -100,6 +103,7 @@ function Dash() {
             currency: 'BRL',
         }).format(value);
     };
+
 
     return (
         <div className={styles.container}>
@@ -151,14 +155,16 @@ function Dash() {
                         ))}
                     </ul>
                 </div>
+                {/* Rodapé com Total Gasto e Saldo Restante */}
                 <div className={styles.footer}>
                     <p>Total Gasto: {formatCurrency(totalGasto)}</p>
                     <p>Saldo Restante: {formatCurrency(saldoRestante)}</p>
                 </div>
             </div>
-
         </div>
     )
 }
 
 export default Dash;
+
+  {/* Projeto pronto */}

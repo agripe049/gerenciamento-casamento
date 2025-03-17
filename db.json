@@ -3,6 +3,10 @@
     "valor": 0
   },
   "itens": [
-    
+    {
+      "id": "553a",
+      "nome": "Buffet",
+      "gasto": 5000
+    }
   ]
 }
