@@ -4,9 +4,24 @@
   },
   "itens": [
     {
-      "id": "553a",
+      "id": "95b5",
       "nome": "Buffet",
-      "gasto": 5000
+      "gasto": 500
+    },
+    {
+      "id": "18e7",
+      "nome": "ddddddddddddddddddd",
+      "gasto": 4500
+    },
+    {
+      "id": "81e8",
+      "nome": "ww",
+      "gasto": 88
+    },
+    {
+      "id": "f95d",
+      "nome": "terno",
+      "gasto": 780
     }
   ]
 }
