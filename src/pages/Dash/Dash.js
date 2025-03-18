@@ -66,13 +66,8 @@ function Dash() {
 
     const remove = (index) => {
         const itemToRemove = itens[index]
-
-        {/*Remover o item do estado local*/ }
         setItens(prevItens => prevItens.filter((_, i) => i !== index));
-
-        {/*Subtrair o valor do item removido do totalGasto*/ }
         setTotalGasto(prevTotal => prevTotal - itemToRemove.gasto);
-
         fetch(`http://localhost:5000/itens/${itemToRemove.id}`, {
             method: "DELETE",
         })
@@ -109,7 +104,6 @@ function Dash() {
         <div className={styles.container}>
             <div className={styles.form}>
                 <h1>Gerenciador de Orçamento para Casamentos</h1>
-                {/*Entrada do orçamento Total*/}
                 <div>
                     <h3>Orçamento Total (R$):</h3>
                     <input
@@ -120,7 +114,6 @@ function Dash() {
                         onChange={(e) => setOrcamentoTotal(e.target.value)}
                     />
                 </div>
-                {/*Entrada dos itens e dos gastos*/}
                 <div>
                     <h3>Item:</h3>
                     <input
@@ -142,7 +135,6 @@ function Dash() {
                     />
                 </div>
                 <button onClick={handleAddItem}>Adicionar Item</button>
-                {/*Termômetro visual*/}
                 <div className={styles.itemList}>
                     <h2>Itens Adicionados</h2>
                     <ul>
@@ -155,7 +147,6 @@ function Dash() {
                         ))}
                     </ul>
                 </div>
-                {/* Rodapé com Total Gasto e Saldo Restante */}
                 <div className={styles.footer}>
                     <p>Total Gasto: {formatCurrency(totalGasto)}</p>
                     <p>Saldo Restante: {formatCurrency(saldoRestante)}</p>
@@ -166,5 +157,3 @@ function Dash() {
 }
 
 export default Dash;
-
-  {/* Projeto pronto */}
