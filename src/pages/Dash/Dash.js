@@ -19,7 +19,6 @@ function Dash() {
                     const data = querySnapshot.docs[0].data();
                     setOrcamentoTotal(data.valor);
                 }
-
                 const itensSnapshot = await getDocs(collection(db, "itens"));
                 const itensLista = itensSnapshot.docs.map(doc => ({
                     id: doc.id,
