@@ -1,104 +1,91 @@
-import styles from './Dash.module.css'
+import styles from './Dash.module.css';
 import { useEffect, useState } from 'react';
+import { db } from '../../services/FirebaseConfig';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 
 function Dash() {
-
-    const [orcamentoTotal, setOrcamentoTotal] = useState("");
+    const [orcamentoTotal, setOrcamentoTotal] = useState(0);
     const [totalGasto, setTotalGasto] = useState(0);
     const [item, setItem] = useState("");
     const [gasto, setGasto] = useState("");
     const [itens, setItens] = useState([]);
 
+    // Carregar orçamento total e itens do Firestore
     useEffect(() => {
-        fetch(`http://localhost:5000/orcamentoTotal`, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                setOrcamentoTotal(data.orcamentoTotal.valor);
-            })
-            .catch((err) => console.log(err))
+        const fetchDados = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "orcamento"));
+                if (!querySnapshot.empty) {
+                    const data = querySnapshot.docs[0].data();
+                    setOrcamentoTotal(data.valor);
+                }
+
+                const itensSnapshot = await getDocs(collection(db, "itens"));
+                const itensLista = itensSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setItens(itensLista);
+
+                // Calcular o total gasto
+                const total = itensLista.reduce((sum, item) => sum + item.gasto, 0);
+                setTotalGasto(total);
+            } catch (error) {
+                console.error("Erro ao buscar dados: ", error);
+            }
+        };
+        fetchDados();
     }, []);
 
-
-    const handleAddItem = () => {
+    // Adicionar item ao Firestore
+    const handleAddItem = async () => {
         if (item && gasto) {
             const novoGasto = parseFloat(gasto);
 
             // Verifica se o item já existe
             const itemExists = itens.some(existingItem => existingItem.nome === item);
-
             if (itemExists) {
                 alert("Este item já foi adicionado.");
-                return; // Não adiciona o item se já existir
+                return;
             }
 
-            setTotalGasto(prevTotal => prevTotal + novoGasto);
-            setItem("");
-            setGasto(0);
-
-            const itemData = {
-                nome: item,
-                gasto: novoGasto
-            };
-
-            fetch(`http://localhost:5000/itens`, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(itemData),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Item adicionado com sucesso:', data);
-                    // Adicione o novo item à lista de itens com o ID retornado
-                    setItens(prevItens => [...prevItens, { ...itemData, id: data.id }]); // Supondo que o servidor retorne o ID
-                })
-                .catch(error => {
-                    console.error('Erro ao adicionar item:', error);
+            try {
+                const docRef = await addDoc(collection(db, "itens"), {
+                    nome: item,
+                    gasto: novoGasto
                 });
+
+                const novoItem = { id: docRef.id, nome: item, gasto: novoGasto };
+                setItens([...itens, novoItem]);
+                setTotalGasto(prevTotal => prevTotal + novoGasto);
+                setItem("");
+                setGasto("");
+            } catch (error) {
+                console.error("Erro ao adicionar item: ", error);
+            }
         }
     };
 
-    const remove = (index) => {
-        const itemToRemove = itens[index]
-        setItens(prevItens => prevItens.filter((_, i) => i !== index));
-        setTotalGasto(prevTotal => prevTotal - itemToRemove.gasto);
-        fetch(`http://localhost:5000/itens/${itemToRemove.id}`, {
-            method: "DELETE",
-        })
-            .then(response => {
-                console.log('Resposta do servidor:', response);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Item removido com sucesso:', data);
-            })
-            .catch(error => {
-                console.error('Erro ao remover item:', error);
-            });
-    }
-
-
-
+    // Remover item do Firestore
+    const remove = async (id, index) => {
+        try {
+            await deleteDoc(doc(db, "itens", id));
+            const itemToRemove = itens[index];
+            setItens(prevItens => prevItens.filter((_, i) => i !== index));
+            setTotalGasto(prevTotal => prevTotal - itemToRemove.gasto);
+        } catch (error) {
+            console.error("Erro ao remover item: ", error);
+        }
+    };
 
     const saldoRestante = orcamentoTotal - totalGasto;
 
-    // Função para formatar números como moeda
     const formatCurrency = (value) => {
         return new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
         }).format(value);
     };
-
 
     return (
         <div className={styles.container}>
@@ -139,10 +126,10 @@ function Dash() {
                     <h2>Itens Adicionados</h2>
                     <ul>
                         {itens.map((item, index) => (
-                            <li key={index}>
+                            <li key={item.id}>
                                 <span>{item.nome}</span>
                                 <span className={styles.price}>{formatCurrency(item.gasto)}</span>
-                                <button onClick={() => remove(index)}>Remover</button>
+                                <button onClick={() => remove(item.id, index)}>Remover</button>
                             </li>
                         ))}
                     </ul>
@@ -153,7 +140,7 @@ function Dash() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Dash;
