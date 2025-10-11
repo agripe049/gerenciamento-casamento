@@ -1,13 +1,13 @@
 Gerenciamento de Casamento
 Aplicação web desenvolvida para auxiliar no planejamento e organização de casamentos, permitindo o gerenciamento de convidados, fornecedores e tarefas de forma eficiente.
 
-📸 Demonstração
+📸 Demonstração:
+https://gerenciamento-casamento.vercel.app/
 
-🚀 Tecnologias Utilizadas
+🚀 Tecnologias Utilizadas:
+
 React
-
 Create React App
-
 Vercel – para deploy
 
 Instalação e Uso
